@@ -6,6 +6,4 @@ const authSchema = Joi.object ({
 
 })
 
-module.exports = {
-    authSchema
-}
+export default authSchema;
