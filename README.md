@@ -4,9 +4,9 @@ type :
 ```
 yarn start
 ```
-###to start the project
+to start the project
 
-##Database tables
+#Database tables
 creating tables
 ```
 -- Table: public.game
@@ -26,7 +26,7 @@ TABLESPACE pg_default;
 ALTER TABLE public.game
     OWNER to postgres;
 ```
-##.env
+#.env
 ```
 PG_USERNAME = 
 PG_PASSWORD = DavyJones99
