@@ -24,11 +24,11 @@ export class GameService{
         })
     }
 
-    async UpdateGame(newGame : UpdateGame) : Promise<GameDB>{
+    async updateGame(newGame : UpdateGame) : Promise<GameDB>{
         return new Promise((resolve, reject) => {
-            this.gamerep.UpdateGame(newGame)
+            this.gamerep.updateGame(newGame)
             .then((result) => {
-                return resolve(result[0]);
+                return resolve(result);
             })
             .catch((error) => {
                 return reject(error);
@@ -37,11 +37,11 @@ export class GameService{
     } 
        
 
-    async CreateGame(newGame:CreateGame) : Promise<void>{
+    async createGame(newGame:CreateGame) : Promise<GameDB>{
         return new Promise((resolve, reject) => {
-            this.gamerep.CreateGame(newGame)
+            this.gamerep.createGame(newGame)
                 .then((result) => {
-                    return resolve(result[0]);
+                    return resolve(result);
                 })
                 .catch((error) => {
                     return reject(error);
@@ -50,9 +50,9 @@ export class GameService{
     }
         
 
-    async DeleteGame(id : number) : Promise<Boolean>{
+    async deleteGame(id : number) : Promise<Boolean>{
         return new Promise((resolve, reject) => {
-            this.gamerep.DeleteGame(id)
+            this.gamerep.deleteGame(id)
                 .then((result) => {
                     return resolve(result);
                 })
