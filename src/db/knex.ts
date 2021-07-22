@@ -2,7 +2,7 @@ import knex, { Knex } from 'knex'
 import config from '../config'
 
 class DBKnex{
-    db : Knex;
+    db !: Knex;
     private knexConfig : Knex.Config;
     private done : boolean;
 
@@ -16,9 +16,6 @@ class DBKnex{
         return new Promise((resolve, reject) =>{
             try{
                 console.log("Knex initialization");
-                if (this.done){
-                    return resolve(true);
-                }
                 this.knexConfig = {
                     client: "pg",
                     connection: {
@@ -35,6 +32,7 @@ class DBKnex{
                 };
 
                 this.db = knex(this.knexConfig);
+                resolve(true);
             }
             catch(error){
                 reject(error);
