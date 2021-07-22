@@ -1,14 +1,13 @@
 import * as express from "express";
 import Joi, { string } from "joi";
-import { runInThisContext } from "vm";
 import {GameService} from "../services/game_services";  
 import BaseController from "./base_controller";
 import {ValidationError} from "../common/http-exception";
-import authSchema from "../validation/baseValidaiton"
+import authSchema from "../validation/Validaiton"
 
 
 
-export class GameController extends BaseController{
+class GameController extends BaseController{
     gameService : GameService;
     
     constructor(){
@@ -18,34 +17,17 @@ export class GameController extends BaseController{
     }
 
     getAllGames(req : express.Request, res : express.Response, next : express.NextFunction){
-        return this.gameService.getAllGames().then((list) => res.status(201).send(list));
+        return this.gameService.getAllGames().then((list) => res.status(200).send(list));
 
     }   
 
-    /* GetGame(req : express.Request, res : express.Response, next : express.NextFunction){
-        const id = req.params.id;
-        authSchema.gameIDValidation.validateAsync(id)
+    updateGame(req : express.Request, res : express.Response, next : express.NextFunction){
+        const request = req.body;
+        authSchema.gameIDValidation.validateAsync(request)
             .then((gameValidated) => {
-                this.gameService.GetGame(gameValidated)
+                this.gameService.updateGame(gameValidated)
                     .then((game) => {
-                        return res.status(201).send(game);
-                    })
-                    .catch((err) => {
-                        next(err);
-                    });
-            })
-            .catch((err : Joi.ValidationError) =>{
-                next(new ValidationError(err.message));
-            })
-    } */
-
-    UpdateGame(req : express.Request, res : express.Response, next : express.NextFunction){
-        const id = req.params.id;
-        authSchema.gameIDValidation.validateAsync(id)
-            .then((gameValidated) => {
-                this.gameService.UpdateGame(gameValidated)
-                    .then((game) => {
-                        return res.status(201).send(game);
+                        return res.status(200).send(game);
                     })
                     .catch((err) => {
                         next(err);
@@ -56,12 +38,12 @@ export class GameController extends BaseController{
             })
     }
 
-    CreateGame(req : express.Request, res : express.Response, next : express.NextFunction){
+    createGame(req : express.Request, res : express.Response, next : express.NextFunction){
         authSchema.gameValidationAdd.validateAsync(req.body)
             .then((gameValidated) => {
-                this.gameService.CreateGame(gameValidated)
+                this.gameService.createGame(gameValidated)
                     .then((game) => {
-                        return res.status(201).send(game);
+                        return res.status(200).send(game);
                     });
             })
             .catch((err : Joi.ValidationError) => {
@@ -69,13 +51,13 @@ export class GameController extends BaseController{
             });
     }
 
-    DeleteGame(req : express.Request, res : express.Response, next : express.NextFunction){
+    deleteGame(req : express.Request, res : express.Response, next : express.NextFunction){
         const id = req.params.id;
         authSchema.gameIDValidation.validateAsync(id)
             .then((gameValidated) => {
-                this.gameService.DeleteGame(gameValidated)
+                this.gameService.deleteGame(gameValidated)
                     .then((game) => {
-                        return res.status(201).send();
+                        return res.status(200).send();
                     })
                     .catch((err) => {
                         next(err);
@@ -88,8 +70,11 @@ export class GameController extends BaseController{
 
     initializeRoutes(){
         this.router.get("/", this.getAllGames.bind(this));
-        this.router.patch("/id", this.UpdateGame.bind(this));
-        this.router.delete("/id", this.DeleteGame.bind(this));
-        this.router.post("/", this.CreateGame.bind(this));
+        this.router.put("/id", this.updateGame.bind(this));
+        this.router.delete("/id", this.deleteGame.bind(this));
+        this.router.post("/", this.createGame.bind(this));
     }
 }
+
+const gamecontroller = new GameController();
+export default gamecontroller.router;
