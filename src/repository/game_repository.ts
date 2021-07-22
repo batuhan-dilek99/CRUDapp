@@ -13,10 +13,10 @@ class GameRepo{
     }
 
 
-    async CreateGame(game : CreateGame) : Promise<GameDB>{
+    async createGame(game : CreateGame) : Promise<GameDB>{
         return new Promise(async(resolve, reject) =>{
             this.gameDB.db("game")
-                .insert({gamename : game.gameName, gamegenre : game.gameGenre})
+                .insert(game)
                     .returning("*")
                         .then((result) => {
                             resolve(result[0]);
@@ -27,7 +27,7 @@ class GameRepo{
         });
     }
 
-    async UpdateGame(game : UpdateGame) : Promise<GameDB>{
+    async updateGame(game : UpdateGame) : Promise<GameDB>{
         return new Promise(async (resolve, reject) => {
             const  updatedgame = game;
             this.gameDB.db("game")
@@ -42,7 +42,7 @@ class GameRepo{
         })
     }
 
-    async DeleteGame(id : number) : Promise<Boolean> {
+    async deleteGame(id : number) : Promise<Boolean> {
         return new Promise(async (resolve, reject) => {
             this.gameDB.db("game").where("game.gameid", id).del()
                 .then(() => {
@@ -59,14 +59,12 @@ class GameRepo{
             this.gameDB.db
                 .select("gameID", "gameName", "gameGenre")
                     .from("game")
-                        .leftJoin("gameid", "gamename", "gamegenre")
-                            .groupBy("game.gameid")
-                                .then((result) => {
-                                    resolve(result[0]);
-                                })
-                                .catch((error) => {
-                                    reject(new DatabaseError(error));
-                                })
+                        .then((result) => {
+                            resolve(result[0]);
+                        })
+                        .catch((error) => {
+                            reject(new DatabaseError(error));
+                        })     
         })
     }
 
