@@ -28,11 +28,11 @@ ALTER TABLE public.game
 ```
 ## .env
 ```
-PG_USERNAME = 
+PG_USERNAME = admin
 PG_PASSWORD = DavyJones99
-POSTGRES_DB = CRUDapp_db
-PG_HOST
-PG_PORT = 3272
+POSTGRES_DB = postgres
+PG_HOST = 127.0.0.1
+PG_PORT = 5050
 APP_PORT = 3000
 ```
 
