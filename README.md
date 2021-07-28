@@ -9,16 +9,12 @@ to start the project
 ## Database tables
 creating tables
 ```
--- Table: public.game
-
--- DROP TABLE public.game;
-
 CREATE TABLE public.game
 (
     gameid integer NOT NULL,
-    gamename character varying(30) COLLATE pg_catalog."default",
-    gamegenre character varying(30) COLLATE pg_catalog."default",
-    CONSTRAINT game_pkey PRIMARY KEY (gameid)
+    gamename "char"[] NOT NULL,
+    gamegenre "char"[] NOT NULL,
+    CONSTRAINT game_pkey PRIMARY KEY (gameid, gamename, gamegenre)
 )
 
 TABLESPACE pg_default;
