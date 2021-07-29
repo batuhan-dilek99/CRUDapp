@@ -69,10 +69,10 @@ class GameController extends BaseController{
     }
 
     initializeRoutes(){
-        this.router.get("/", this.getAllGames.bind(this));
-        this.router.put("/id", this.updateGame.bind(this));
-        this.router.delete("/id", this.deleteGame.bind(this));
-        this.router.post("/", this.createGame.bind(this));
+       this.router.get("/games", this.getAllGames.bind(this));
+        this.router.put("/update", this.updateGame.bind(this));
+        this.router.delete("/delete", this.deleteGame.bind(this));
+        this.router.post("/add", this.createGame.bind(this));
     }
 }
 
